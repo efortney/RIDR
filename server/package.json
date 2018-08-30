@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "test": "jest echo \"performing test cases...\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.4",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1"
+  }
+}
