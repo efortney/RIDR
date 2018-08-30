@@ -1,0 +1,13 @@
+{
+  "name": "ridr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server \"dev\" ",
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "test": "jest echo \"performing test cases...\" "
+  },
+  "author": "",
+  "license": "ISC"
+}
