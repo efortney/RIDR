@@ -1,5 +1,5 @@
 ---
-name: 'Pull Request '
+name: 'PULL_REQUEST_TEMPLATE'
 about: 'Default pull request template '
 
 ---
