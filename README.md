@@ -32,3 +32,7 @@ After running the above step, you can fire up the development server. YOU MUST H
 [Lyft](https://www.lyft.com/developers)
 
 [Yelp](https://www.yelp.com/developers)
+
+[PWA](https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/)
+
+[Material Design / UI](https://material-ui.com/)

@@ -12,10 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^3.0.1",
+    "@material-ui/icons": "^3.0.1",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.1",
     "express": "^4.16.3",
     "jest": "^23.5.0",
-    "nodemon": "^1.18.4",
-    "body-parser": "^1.18.3",
-    "concurrently": "^3.6.1"
+    "nodemon": "^1.18.4"
   }
 }
