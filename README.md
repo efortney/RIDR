@@ -29,10 +29,12 @@ After running the above step, you can fire up the development server. YOU MUST H
 
 [Uber](https://developer.uber.com/)
 
-[Lyft](https://www.lyft.com/developers)
+[Lyft](https://developer.lyft.com/docs)
 
 [Yelp](https://www.yelp.com/developers)
 
 [PWA](https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/)
 
 [Material Design / UI](https://material-ui.com/)
+
+[Google Maps](https://cloud.google.com/maps-platform/)
