@@ -1,12 +1,11 @@
 const passport = require('passport');
 const uberStrategy = require('passport-uber-v2').Strategy;
-const keys = require('../config/keys');
 
 passport.use(
   new uberStrategy(
     {
-      clientID: keys.uberCLientID,
-      clientSecret: keys.uberClientSecret,
+      clientID: "XDxhGf5gKETizrCvi6kLmfivLbatNJX_",
+      clientSecret: "71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5",
       callbackURL: 'http://localhost:3000/auth/uber',
       proxy: true
     },
