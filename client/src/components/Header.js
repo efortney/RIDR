@@ -1,12 +1,13 @@
 // Help page
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import '../styles/header.css';
 
 class Header extends Component {
   render() {
     return (
-      <div className="text-center">
-        <h3> Welcome to RIDR </h3>
-      </div>
+      <h1> HEADER </h1>
     );
   }
 }
