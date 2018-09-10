@@ -13,8 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^3.0.1",
-    "@material-ui/icons": "^3.0.1",
     "body-parser": "^1.18.3",
     "concurrently": "^3.6.1",
     "cookie-session": "^2.0.0-beta.3",
@@ -22,6 +20,7 @@
     "jest": "^23.5.0",
     "nodemon": "^1.18.4",
     "passport": "^0.4.0",
-    "passport-uber-v2": "^0.1.1"
+    "passport-uber-v2": "^0.1.1",
+    "react-router-dom": "^4.3.1"
   }
 }

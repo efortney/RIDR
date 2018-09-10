@@ -3,7 +3,17 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Header from './components/Header';
 
-import './styles/App.css';
+const homePage = () => {
+  return (
+    <h4> HOME PAGE </h4>
+  );
+};
+
+const uberSignIn = () => {
+  return (
+    <h4> You did an Oauth yay </h4>
+  );
+};
 
 class App extends Component {
   render() {
@@ -11,7 +21,10 @@ class App extends Component {
       <div>
         <Header />
         <BrowserRouter>
-        <Route exact path="/home" component={Header} />
+          <div>
+            <Route exact path="/" component={homePage} />
+            <Route path="/home" component={uberSignIn} />
+          </div>
         </BrowserRouter>
       </div>
     );
