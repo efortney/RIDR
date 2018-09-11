@@ -5,6 +5,5 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo building environmet
-      - run: npm run dev 
+      - run: npm run test
       
