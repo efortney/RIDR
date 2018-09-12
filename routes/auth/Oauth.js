@@ -11,6 +11,8 @@ module.exports = app => {
     res.redirect('/home');
   });
 
-
+  app.get('/auth/lyft', passport.authenticate('lyft', { scope: ['profile'] }), (req, res) => {
+    res.redirect('/home');
+});
   
 };
