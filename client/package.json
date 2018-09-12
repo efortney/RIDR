@@ -5,6 +5,9 @@
   "proxy": {
     "/auth/uber": {
       "target":"http://localhost:8080"
+    },
+    "/auth/lyft": {
+      "target":"http://localhost:8080"
     }
   },
   "dependencies": {

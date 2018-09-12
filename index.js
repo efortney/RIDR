@@ -7,7 +7,6 @@ const https = require('https');
 const app = express();
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
-const Uber = './routes/Auth/Uber.js';
 const passport = require('passport');
 
 app.use(
@@ -29,9 +28,10 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-require('./routes/auth/Uber')(app);
+require('./routes/auth/Oauth')(app);
 require('./routes/api/routes')(app);
-require('./services/passport');
+require('./services/lyft');
+require('./services/uber');
 
 const port = process.env.NODE_ENV || 8080;
 
