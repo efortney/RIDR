@@ -1,7 +1,5 @@
 import React from 'react';
 
-require('../styles/header.css');
-
 const Header = () => {
   return (
     <div>
@@ -13,7 +11,7 @@ const Header = () => {
           <ul className="right">
             <li>
               <a href="/profile">
-                <i className="material-icons">account_circle</i>
+                <i className="material-icons profileLink">account_circle</i>
               </a>
             </li>
           </ul>

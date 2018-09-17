@@ -3,7 +3,7 @@ a {
 }
 
 .homeText {
-    color: #FCF3A4;
+    color: white;
 }
 
 .footer {
@@ -21,4 +21,8 @@ a {
 
 .logo {
     padding-left: .6em;
+}
+
+.profileLink {
+    padding-right: .6em;
 }
