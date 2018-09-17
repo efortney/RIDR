@@ -1,0 +1,24 @@
+a {
+    text-decoration: none !important;
+}
+
+.homeText {
+    color: #FCF3A4;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+}
+
+.footerText {
+    padding-top: .3em;
+    font-size: 1.2em;
+}
+
+.logo {
+    padding-left: .6em;
+}

@@ -4,15 +4,14 @@
   "private": true,
   "proxy": {
     "/auth/uber": {
-      "target":"http://localhost:8080"
+      "target": "http://localhost:8080"
     },
     "/auth/lyft": {
-      "target":"http://localhost:8080"
+      "target": "http://localhost:8080"
     }
   },
   "dependencies": {
-    "@material-ui/core": "^3.0.1",
-    "@material-ui/icons": "^3.0.1",
+    "materialize-css": "^1.0.0-rc.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
