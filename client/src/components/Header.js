@@ -10,7 +10,7 @@ const Header = () => {
           </a>
           <ul className="right">
             <li>
-              <a href="/profile">
+              <a href="/home/profile">
                 <i className="material-icons profileLink">account_circle</i>
               </a>
             </li>

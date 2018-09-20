@@ -7,5 +7,4 @@ module.exports = app => {
         req.logout();
         res.redirect('/');
       });
-
 }
