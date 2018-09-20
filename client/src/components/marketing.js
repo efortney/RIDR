@@ -9,20 +9,17 @@ const Marketing = () => {
     <div className="marketing-image">
     <div className="container-fluid marketing-text">
     <div className="row">
-      <div className="col-md-12 text-center" />
+      <div className="col-md-12 text-center">
       <div className="container">
       <img src={taxi} />
-        <h5>
-          Go wherever you want, however you want with RIDR. Choose from
-          UBER, Lyft, and local cab companies to find the best options
-          available to you.
-        </h5>
+      <h2> RIDR </h2>
+       </div>
         <a href="/signUp">
           <button className="btn btn-primary marketingButton blue">
             Sign Up
           </button>
         </a>
-        <a href="/login">
+        <a href="/auth/google">
           <button className="btn btn-danger marketingButton green">
             Login
           </button>

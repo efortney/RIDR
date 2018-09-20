@@ -8,4 +8,6 @@
      uberClientSecret: 'X96VwqLL_2XVx1FIG7eJqr46w9lB8pJ6_x8CxWIA',
      lyftClientID: '1lddKeQDyRYh',
      lyftSecret:'_sP9qoABnjVJhulZRCTmXuVR0CwyMWpI',
+     googleClientID: '562944288342-6sb1ksjmslimm7cnpvrggckmgm8au45c.apps.googleusercontent.com',
+     googleClientSecret: 'pT1bm-0k550emvgfGGCVd4e0',
  }

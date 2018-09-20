@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/auth/uber": {
+    "/auth/google": {
       "target": "http://localhost:8080"
     },
-    "/auth/lyft": {
+    "/auth/*": {
+      "target": "http://localhost:8080"
+    },
+    "/api/*": {
       "target": "http://localhost:8080"
     }
   },
