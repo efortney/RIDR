@@ -5,8 +5,8 @@ const Header = () => {
     <div>
       <nav>
         <div className="black nav-wrapper">
-          <a href="/" className="brand-logo">
-           <span className="homeText logo">RIDR </span>
+          <a href="/home" className="brand-logo">
+            <span className="homeText logo">RIDR </span>
           </a>
           <ul className="right">
             <li>
