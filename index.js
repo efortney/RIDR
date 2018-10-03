@@ -35,7 +35,6 @@ require('./services/lyft');
 require('./services/uber');
 require('./services/google');
 
-
 const PORT = process.env.PORT || 8080;
 
 app.get('*', (req, res) => {
