@@ -8,6 +8,7 @@ const app = express();
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 
 app.use(
   cookieSession({
@@ -34,13 +35,11 @@ require('./services/lyft');
 require('./services/uber');
 require('./services/google');
 
-const path = require('path');
+
 const PORT = process.env.PORT || 8080;
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-app.listen(port, () => {
-  console.log('Listening on port ' + port);
-});
+app.listen(PORT);
