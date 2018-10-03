@@ -14,14 +14,9 @@ const Marketing = () => {
       <img src={taxi} />
       <h2> RIDR </h2>
        </div>
-        <a href="/signUp">
-          <button className="btn btn-primary marketingButton blue">
-            Sign Up
-          </button>
-        </a>
-        <a href="/auth/google">
-          <button className="btn btn-danger marketingButton green">
-            Login
+        <a href="/login">
+          <button className="btn marketingButton blue">
+            Get started
           </button>
         </a>
       </div>
