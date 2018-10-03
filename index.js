@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
+const PORT = process.env.PORT || 8080;
 
 app.use(
   cookieSession({
@@ -20,6 +21,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -34,8 +37,6 @@ require('./routes/api/routes')(app);
 require('./services/lyft');
 require('./services/uber');
 require('./services/google');
-
-const PORT = process.env.PORT || 8080;
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
