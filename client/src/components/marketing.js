@@ -14,7 +14,7 @@ const Marketing = () => {
                 <h2> RIDR </h2>
               </div>
               <a href="/login">
-                <button className="btn marketingButton blue">
+                <button className="btn btn-primary blue">
                   Get started
                 </button>
               </a>

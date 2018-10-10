@@ -8,11 +8,8 @@ const login = () => {
           <h5> Welcome to RIDR, please sign in. </h5>
           <hr />
           <a href="/auth/google">
-            <button className="btn blue">Sign In With Google</button>
+            <button className="btn btn-primary">Sign In With Google</button>
           </a>
-          <form>
-            <input placeholder="Username" id="username" />
-          </form>
         </div>
       </div>
     </div>
