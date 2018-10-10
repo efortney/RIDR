@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: keys.lyftClientID,
       clientSecret: keys.lyftSecret,
-      callbackURL: 'http://localhost:3000/auth/lyft',
+      callbackURL: '/auth/lyft',
       proxy: true
     },
     function(accessToken, refreshToken, profile, done) {

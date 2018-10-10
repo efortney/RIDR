@@ -38,8 +38,13 @@ require('./services/lyft');
 require('./services/uber');
 require('./services/google');
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
+if (process.env.NODE_ENV === "production") {
+  // express will serve prod assests such as CSS files
+  app.use(express.static("client/build"));
+  // express will serve index.html file if route is unrecognized
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 app.listen(PORT);

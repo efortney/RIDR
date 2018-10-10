@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: keys.uberClientID,
       clientSecret: keys.uberClientSecret,
-      callbackURL: 'http://localhost:3000/auth/uber',
+      callbackURL: '/auth/uber',
       proxy: true
     },
     function(accessToken, refreshToken, profile, done) {
