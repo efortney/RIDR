@@ -38,6 +38,10 @@ require('./services/lyft');
 require('./services/uber');
 require('./services/google');
 
+app.get('/whatsup', (req, res) => {
+  res.send('whats up, duck?');
+})
+
 // if (process.env.NODE_ENV === "production") {
 //   // express will serve prod assests such as CSS files
 //   app.use(express.static("client/build"));
