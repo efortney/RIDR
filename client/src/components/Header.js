@@ -5,7 +5,7 @@ const Header = () => {
     <div className='navbarClear'>
     <nav className="navbar  navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/home">
-        <i className="material-icons">home</i>
+        RIDR
       </a>
       <button
         className="navbar-toggler"
