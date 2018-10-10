@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
   return (
     <div className='navbarClear'>
-    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar  navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="/home">
         <i className="material-icons">home</i>
       </a>
