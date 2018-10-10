@@ -6,7 +6,7 @@ import login from './components/login';
 
 require('./styles/main.css');
 
-const SignIn = () => {
+const Home = () => {
   return <h4 className="text-center bottom"> Welcome </h4>;
 };
 
@@ -21,8 +21,8 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route path="/home" component={Header} />
+            <Route exact path="/home" component={Home} />
             <Route exact path="/" component={Marketing} />
-            <Route exact path="/home" component={SignIn} />
             <Route path="/home/profile" component={profile} />
             <Route exact path="/login" component={login} />
           </div>

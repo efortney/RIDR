@@ -8,13 +8,13 @@
   },
   "proxy": {
     "/auth/google": {
-      "target": "http://localhost:8080"
+      "target": "http://localhost:5000"
     },
     "/auth/*": {
-      "target": "http://localhost:8080"
+      "target": "http://localhost:5000"
     },
     "/api/*": {
-      "target": "http://localhost:8080"
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

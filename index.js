@@ -9,7 +9,7 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const path = require('path');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 app.use(
   cookieSession({
