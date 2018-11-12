@@ -13,7 +13,7 @@ const Marketing = () => {
                 <img src={require('../images/taxi.png')} />
                 <h2> RIDR </h2>
               </div>
-              <a href="/login">
+              <a href="/auth/google">
                 <button className="btn btn-primary blue">
                   Get started
                 </button>
