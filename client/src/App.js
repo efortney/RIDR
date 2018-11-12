@@ -11,9 +11,13 @@ const Home = () => {
 };
 
 const profile = () => {
-  return <h4 className="text-center">User Profile</h4>;
+  return <h4 className="text-center">Ligma</h4>;
 };
 
+/**
+ * Main App class. All user interactions will take place within this clas
+ * Routes are added using the react router interface
+ */
 class App extends Component {
   render() {
     return (

@@ -11,7 +11,7 @@ module.exports = app => {
     passport.authenticate('uber', { scope: ['profile'] }),
     (req, res) => {
       res.redirect('/home');
-    }
+    } 
   );
 
   app.get(
@@ -27,10 +27,10 @@ module.exports = app => {
     passport.authenticate('google', { scope: ['profile', 'email'] })
   );
 
-  app.get(
-    '/auth/google/callback',
-    (req, res) => {
-      res.redirect('/home');
-    }
-  );
+  app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/home');
+  });
+
 };
