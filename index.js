@@ -12,11 +12,18 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 
+const app = express();
+
 require('./models/User');
-require('./services/google');
+
+mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongo);
 
-const app = express();
+require('./services/google');
+
+
+app.use(bodyParser.urlencoded({extended:false}));
+
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -25,28 +32,17 @@ app.use(
   }),
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(bodyParser.json());
-
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+app.use(passport.initialize());
+app.use(passport.session());
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 require('./routes/auth/Oauth')(app);
 require('./routes/api/routes')(app);
 require('./services/lyft');
 require('./services/uber');;
 
-app.get('/whatsup', (req, res) => {
-  res.send('whats up, duck?');
-})
 
 if (process.env.NODE_ENV === "production") {
   // express will serve index.html file if route is unrecognized
