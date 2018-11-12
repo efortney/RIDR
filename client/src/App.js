@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Marketing from './components/marketing';
-import Profile from './components/profile';
+import Profile from './components/Profile';
 
 require('./styles/main.css');
 
