@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Marketing from './components/marketing';
+
 import Profile from './components/Profile';
 
 require('./styles/main.css');
 
 const Home = () => {
   return <h4 className="text-center bottom"> Welcome </h4>;
+};
+
+
+const profile = () => {
+  return <h4 className="text-center">Ligma</h4>;
 };
 
 /**
