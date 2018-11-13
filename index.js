@@ -11,10 +11,6 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
-<<<<<<< HEAD
-=======
-
->>>>>>> integrate_map
 const app = express();
 
 require('./models/User');
@@ -26,10 +22,6 @@ require('./services/google');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
-<<<<<<< HEAD
-=======
-
->>>>>>> integrate_map
 app.use(bodyParser.json());
 app.use(
   cookieSession({
