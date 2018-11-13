@@ -2,18 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Marketing from './components/marketing';
-import Profile from './components/profile';
 
+import Profile from './components/Profile';
+import Map from './components/Map';
 require('./styles/main.css');
-
-const Home = () => {
-  return <h4 className="text-center bottom"> Welcome </h4>;
-};
-
-
-const profile = () => {
-  return <h4 className="text-center">Ligma</h4>;
-};
 
 /**
  * Main App class. All user interactions will take place within this clas
@@ -26,7 +18,11 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route path="/home" component={Header} />
-            <Route exact path="/home" component={Home} />
+            <div className="container-fluid">
+              <div className="row">
+                <Route exact path="/home" component={Map} />
+              </div>
+            </div>
             <Route exact path="/" component={Marketing} />
             <Route path="/home/profile" component={Profile} />
           </div>
