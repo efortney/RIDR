@@ -40,6 +40,7 @@ class Profile extends Component  {
         } else {
             return (
                 <div style={loadingStyles}>
+
                 <ClipLoader
                   sizeUnit={"px"}
                   size={125}
