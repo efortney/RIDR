@@ -20,6 +20,8 @@
   "dependencies": {
     "@emotion/core": "^10.0.0-beta.11",
     "axios": "^0.18.0",
+    "google-map-react": "^1.1.0",
+    "google-maps-react": "^2.0.2",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

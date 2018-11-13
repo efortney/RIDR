@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
 
+const loadingStyles = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    marginTop: '-50px',
+    marginLeft: '-100px'
+}
 
 class Profile extends Component  {
     constructor(props){
@@ -32,7 +39,7 @@ class Profile extends Component  {
             )  
         } else {
             return (
-                <div className='text-center'>
+                <div style={loadingStyles}>
                 <ClipLoader
                   sizeUnit={"px"}
                   size={125}
