@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Marketing from './components/marketing';
-
 import Profile from './components/Profile';
 import Map from './components/Map';
 require('./styles/main.css');
