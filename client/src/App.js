@@ -5,6 +5,7 @@ import Marketing from './components/marketing';
 
 import Profile from './components/profile'
 import Map from './components/Map';
+import SearchBar from './components/searchbar';
 require('./styles/main.css');
 
 /**
@@ -18,12 +19,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route path="/home" component={Header} />
-            <div className="container-fluid">
-              <div className="row">
-                <Route exact path="/home" component={Map} />
-              </div>
-            </div>
-            <Route exact path="/" component={Marketing} />
+            <Route exact path="/" component={Map} />
             <Route path="/home/profile" component={Profile} />
           </div>
         </BrowserRouter>

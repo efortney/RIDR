@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { InfoWindow, Marker } from 'google-maps-react';
 import { ClipLoader } from 'react-spinners';
+import searchbar from './searchbar';
+import SearchBar from './searchbar';
+
 
 const mapStyles = {
   width: '100%',
@@ -9,24 +12,18 @@ const mapStyles = {
 };
 
 const loadingStyles = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    marginTop: '-50px',
-    marginLeft: '-100px'
-}
+  position: 'fixed',
+  top: '50%',
+  left: '40%'
+};
 
 const LoadingContainer = () => {
-    return (
-    <div className='text-center' style={loadingStyles}>
-    <ClipLoader
-      sizeUnit={"px"}
-      size={125}
-      color={'#123abc'}
-    />
-  </div>
-    ); 
-}
+  return (
+    <div className="text-center" style={loadingStyles}>
+      <ClipLoader sizeUnit={'px'} size={125} color={'#123abc'} />
+    </div>
+  );
+};
 
 export class MapContainer extends Component {
   state = { userLocation: { lat: 32, lng: 32 }, loading: true };
@@ -56,13 +53,17 @@ export class MapContainer extends Component {
     }
 
     return (
-      <Map
-        google={google}
-        mapTypeControl={false}
-        initialCenter={userLocation}
-        zoom={14}>
-        <Marker position={userLocation}/>
-      </Map>
+      <div>
+        <SearchBar />
+        <Map
+          google={google}
+          mapTypeControl={false}
+          initialCenter={userLocation}
+          zoom={14}
+        >
+          <Marker position={userLocation} />
+        </Map>
+      </div>
     );
   }
 }
