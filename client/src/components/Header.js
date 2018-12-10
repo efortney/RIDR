@@ -22,11 +22,6 @@ const Header = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="/home/profile">
-              Profile
-            </a>
-          </li>
-          <li className="nav-item">
             <a className="nav-link" href="/api/logout">
               Logout
             </a>

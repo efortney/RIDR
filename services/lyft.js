@@ -2,6 +2,17 @@ const passport = require('passport');
 const lyftStrategy = require('passport-lyft').Strategy;
 const keys = require('../config/keys');
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => {
+    console.log('deserialized user');
+    done(null, user);
+  });
+});
+
 passport.use(
   new lyftStrategy(
     {

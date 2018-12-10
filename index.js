@@ -16,8 +16,13 @@ const app = express();
 require('./models/User');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongo);
 
+mongoose.connect((keys.mongo), (err, res) => {
+  if(err){
+    console.log('error at mongoose.connect: ' +err);
+  }
+  console.log('connected successfully to database')
+});
 require('./services/google');
 
 

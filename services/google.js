@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const User = mongoose.model('users');
 
-passport.serializeUser((user, done) => { 
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
@@ -14,7 +14,7 @@ passport.deserializeUser((id, done) => {
     console.log('deserialized user');
     done(null, user);
   });
-})
+});
 
 passport.use(
   new GoogleStrategy(
@@ -30,14 +30,14 @@ passport.use(
       if (existingUser) {
         return done(null, existingUser);
       }
-      const user = await new User(
-        { googleID: profile.id , 
-          firstName: profile.name.givenName, 
-          lastName: profile.name.familyName,
-          rideCount: 0
-        }).save();
+      const user = await new User({
+        googleID: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        rideCount: 0
+      }).save();
       done(null, user);
-      console.log("user created");
+      console.log('user created');
     }
   )
 );
