@@ -11,5 +11,6 @@
      googleClientID: '562944288342-6sb1ksjmslimm7cnpvrggckmgm8au45c.apps.googleusercontent.com',
      googleClientSecret: 'pT1bm-0k550emvgfGGCVd4e0',
      mongo: 'mongodb://efortney227:elliot123@ds129393.mlab.com:29393/ridr',
-     googleMap: 'AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4'
+     googleMap: 'AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4',
+     yelp : 'Wwl2uAr5ECJodlKe82OKdteOiMOpYVd6Sh937pCTz8GRjnsUu37vkw81Ky-GIzb_sOpacgKSWgypGC58h_C0oyx6OxrQntgFDjlO1KZw9iDTd6NqDZIYdy-JfSr_W3Yx'
  }

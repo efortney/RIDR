@@ -4,8 +4,9 @@ const Header = () => {
   return (
     <div className='navbarClear'>
     <nav className="navbar  navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/home">
-        RIDR
+      <a className="navbar-brand" href="/">
+       <img height="30px"  src={require('../images/RIDRLOC.png')} />
+       RIDR
       </a>
       <button
         className="navbar-toggler"
@@ -22,10 +23,10 @@ const Header = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="/api/logout">
-              Logout
-            </a>
-          </li>
+          <a className="nav-link" href="/profile">
+            Profile 
+          </a>
+        </li>
         </ul>
       </div>
     </nav>

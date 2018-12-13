@@ -1,3 +1,8 @@
+/**
+ * The profile section of the app is where the user will be able to see stats about 
+ * their rides, and other relevant data. 
+ */
+
 import React, {Component} from 'react';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';

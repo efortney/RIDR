@@ -1,10 +1,13 @@
+/**
+ * Map currently exists as the home page of the application, where we are rendering 
+ * most of the UI. 
+ */
+
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { InfoWindow, Marker } from 'google-maps-react';
 import { ClipLoader } from 'react-spinners';
-import searchbar from './searchbar';
 import SearchBar from './searchbar';
-
 
 const mapStyles = {
   width: '100%',
@@ -17,6 +20,9 @@ const loadingStyles = {
   left: '40%'
 };
 
+/** 
+ * Displays while the googe maps API is loading  
+*/
 const LoadingContainer = () => {
   return (
     <div className="text-center" style={loadingStyles}>
@@ -54,7 +60,7 @@ export class MapContainer extends Component {
 
     return (
       <div>
-        <SearchBar />
+        <SearchBar location={this.state.userLocation} />
         <Map
           google={google}
           mapTypeControl={false}

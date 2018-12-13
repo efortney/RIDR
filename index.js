@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const app = express();
+const yelpController = require('./routes/api/yelp');
 
 require('./models/User');
 
@@ -44,7 +45,7 @@ app.use(passport.session());
 require('./routes/auth/Oauth')(app);
 require('./routes/api/routes')(app);
 require('./services/lyft');
-require('./services/uber');;
+require('./services/uber');
 
 
 if (process.env.NODE_ENV === "production") {

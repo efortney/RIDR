@@ -10,7 +10,7 @@ module.exports = app => {
     '/auth/uber',
     passport.authenticate('uber', { scope: ['profile'] }),
     (req, res) => {
-      res.redirect('/home');
+      res.redirect('/');
     } 
   );
 
@@ -18,7 +18,7 @@ module.exports = app => {
     '/auth/lyft',
     passport.authenticate('lyft', { scope: ['profile'] }),
     (req, res) => {
-      res.redirect('/home');
+      res.redirect('/');
     }
   );
 
@@ -30,7 +30,7 @@ module.exports = app => {
   app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
-    res.redirect('/home');
+    res.redirect('/');
   });
 
 };
