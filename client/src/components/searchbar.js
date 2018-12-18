@@ -23,6 +23,7 @@ class SearchBar extends Component {
       <form
         method="post"
         action="/api/search"
+        onSubmit={this.handleSubmit}
       >
       <input className="" type="hidden" name="lat" value={this.location.lat} />
       <input className="" type="hidden" name="long" value={this.location.lng} />

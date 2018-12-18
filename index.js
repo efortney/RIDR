@@ -12,9 +12,10 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const app = express();
+require('./models/User');
+require('./models/Location');
 const yelpController = require('./routes/api/yelp');
 
-require('./models/User');
 
 mongoose.Promise = global.Promise;
 
@@ -24,8 +25,8 @@ mongoose.connect((keys.mongo), (err, res) => {
   }
   console.log('connected successfully to database')
 });
-require('./services/google');
 
+require('./services/google');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
