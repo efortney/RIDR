@@ -6,7 +6,7 @@ const Header = () => {
       <nav className="navbar  navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="/home">
           <img height="30px" src={require('../images/RIDRLOC.png')} />
-          RIDR
+          RYDR
         </a>
         <button
           className="navbar-toggler"
