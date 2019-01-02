@@ -40,7 +40,6 @@ class SearchBar extends Component {
 
   handleChange(event) {
     this.setState({ query: event });
-    console.log(this.location);
   }
 
 }

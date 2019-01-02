@@ -14,8 +14,6 @@ const keys = require('./config/keys');
 const app = express();
 require('./models/User');
 require('./models/Location');
-const yelpController = require('./routes/api/yelp');
-
 
 mongoose.Promise = global.Promise;
 
