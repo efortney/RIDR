@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const app = express();
+const cors = require('cors');
+
 require('./models/User');
 require('./models/Location');
 
@@ -27,6 +29,7 @@ mongoose.connect((keys.mongo), (err, res) => {
 require('./services/google');
 
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -34,6 +37,8 @@ app.use(
     keys: ['asdfjasdviuasdaehr'],
   }),
 );
+
+app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 

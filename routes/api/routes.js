@@ -20,13 +20,28 @@ module.exports = app => {
    * first available result
    */
   app.post('/api/search', requireLogin, async (req, res) => {
+    console.log(req.location);
     let jsonPayload = req.body;
-    let response = await makeRequest(
+    let val = await makeRequest(
       jsonPayload.destination,
       jsonPayload.lat,
       jsonPayload.long
     );
-    res.send(response);
+    const location = await new Location({
+      name: val.name,
+      image: val.image_url,
+      coordinates: {
+        latitude: val.coordinates.latitude,
+        longitude: val.coordinates.latitude
+      },
+      rating: val.rating,
+      is_closed: val.is_closed,
+      display_phone: val.display_phone
+    });
+    console.log(location);
+    res.render('result', {
+      location: location
+    });
   });
 
   // grabs the current user for the application
@@ -55,6 +70,7 @@ module.exports = app => {
       .catch(error => {
         console.log(error);
       });
+
     return result;
   }
 

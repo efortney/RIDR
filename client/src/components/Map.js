@@ -1,6 +1,6 @@
 /**
- * Map currently exists as the home page of the application, where we are rendering 
- * most of the UI. 
+ * Map currently exists as the home page of the application, where we are rendering
+ * most of the UI.
  */
 
 import React, { Component } from 'react';
@@ -20,9 +20,9 @@ const loadingStyles = {
   left: '40%'
 };
 
-/** 
- * Displays while the googe maps API is loading  
-*/
+/**
+ * Displays while the googe maps API is loading
+ */
 const LoadingContainer = () => {
   return (
     <div className="text-center" style={loadingStyles}>
@@ -32,7 +32,14 @@ const LoadingContainer = () => {
 };
 
 export class MapContainer extends Component {
-  state = { userLocation: { lat: 32, lng: 32 }, loading: true };
+  constructor(){
+    super();
+  }
+  state = {
+    userLocation: { lat: 92, lng: 92 },
+    loading: true,
+    destination: { lat: 12, lng: 92 }
+  };
 
   componentDidMount(props) {
     navigator.geolocation.getCurrentPosition(
@@ -72,7 +79,17 @@ export class MapContainer extends Component {
       </div>
     );
   }
-}
+
+  // updates maps location when a new destination is searched for 
+  handleChange(location) {
+    this.setState({
+      userLocation: {lat : location.latitude , lng : location.longitude}
+    });
+    console.log(this.state.userLocation)
+  }
+
+} // end of component 
+
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4',

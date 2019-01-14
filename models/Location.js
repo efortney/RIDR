@@ -10,9 +10,10 @@ const LocationSchema = new Schema({
       latitude : Number,
       longitude : Number
   },
-  address : String,
+  image : String,
   rating : Number, 
   is_closed : Boolean,
+  display_phone : String,
 });
 
 // create the collection with mongoose

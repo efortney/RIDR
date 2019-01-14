@@ -57,7 +57,6 @@ class Profile extends Component  {
     }
 
     /** 
-     * TODO: NEEDS TO BE MOVED TO ITS OWN FILE
      * This function is responsible for performing a server request 
      * to get the user. 
     */
