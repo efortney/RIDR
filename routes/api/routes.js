@@ -14,10 +14,14 @@ module.exports = app => {
     req.logout();
     res.redirect('/');
   });
-
+  
+/**
+ * This is a change 
+ */
+   
   /**
    * Performs a search using the user destination, the desired location, and returns the
-   * first available result
+   * first available result. Once found, it will redirect the user to a new page, rendering the result view 
    */
   app.post('/api/search', requireLogin, async (req, res) => {
     console.log(req.location);
@@ -34,6 +38,7 @@ module.exports = app => {
         latitude: val.coordinates.latitude,
         longitude: val.coordinates.latitude
       },
+      address: val.location.address1,
       rating: val.rating,
       is_closed: val.is_closed,
       display_phone: val.display_phone
@@ -70,7 +75,6 @@ module.exports = app => {
       .catch(error => {
         console.log(error);
       });
-
     return result;
   }
 
@@ -88,7 +92,7 @@ module.exports = app => {
       } else {
         // build a new location in the db and save it
         const newLocation = await new Location({
-          address: location.location.address1,
+          address: location.address1,
           name: location.name,
           coordinates: {
             longitude: location.coordinates.longitude,

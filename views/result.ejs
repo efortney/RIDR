@@ -8,16 +8,20 @@
 
 <body>
     <div class="container">
-        <div class="card">
+        <div class="card text-center">
             <img class="card-img-top" src=<%= location.image %> alt="destination" />
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                <h5 class="card-title">
+                    <%= location.name %>
+                </h5>
+                <p>
+                    <%= location.address %>
                 </p>
-                <a href="#" class="btn btn-primary">
-                    Order Ride
-                </a>
+                <form>
+                    <btn class="btn btn-primary">
+                        Order Ride
+                    </btn>
+                </form>
             </div>
         </div>
     </div>
