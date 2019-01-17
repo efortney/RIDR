@@ -20,12 +20,11 @@ module.exports = app => {
    * first available result
    */
   app.post('/api/search', requireLogin, async (req, res) => {
-    console.log(req.location);
     let jsonPayload = req.body;
     let val = await makeRequest(
       jsonPayload.destination,
       jsonPayload.lat,
-      jsonPayload.long
+      jsonPayload.lng
     );
     const location = await new Location({
       name: val.name,
@@ -38,7 +37,6 @@ module.exports = app => {
       is_closed: val.is_closed,
       display_phone: val.display_phone
     });
-    console.log(location);
     res.render('result', {
       location: location
     });
@@ -57,6 +55,7 @@ module.exports = app => {
    * @param {String} location : the location the search is being conducted in
    */
   async function makeRequest(term, lat, long) {
+    console.log('lat: ' + lat + ' long: ' + long)
     let result = client
       .search({
         term: term,
@@ -64,6 +63,7 @@ module.exports = app => {
       })
       .then(res => {
         let destination = res.jsonBody.businesses[0];
+        console.log(destination);
         buildLocation(destination);
         return destination;
       })
