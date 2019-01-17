@@ -24,7 +24,7 @@ To start a docker container, youll first need to install Docker. Its pretty easy
 
 [Docker](https://www.youtube.com/watch?v=Kyx2PsuwomE)
 
-[Continuous Integration (CI)](https://docs.travis-ci.com/user/getting-started)
+[Continuous Integration (CI)](https://circleci.com/docs/)
 
 [React](https://reactjs.org/)
 
