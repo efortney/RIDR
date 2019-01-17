@@ -11,11 +11,18 @@ First we will need to install all dependencies. CD into the server directory, an
 
 After running the above step, you can fire up the development server. YOU MUST HAVE NODE AND REACT INSTALLED!! At the server directory, run the command `npm run dev`. This will concurrently run both the front end and back end servers. Navigate to localhost:3000 in your browser if you are not automatically kicked there.  
 
+### Docker 
+Docker is a container platform that allows us to have a production or development enviroment easily deployed on any machine without having to fight against configuration issues. It is similar to a virutal machine, but it has several distinct advantages, mainly that containers can be built on top of eachother. This allows for the development of several containers that are responsible for performing specific tasks. When thinking in terms of scalability, this is one of the greatest solutions that is currently available. 
+
+### Development With Docker 
+To start a docker container, youll first need to install Docker. Its pretty easy to install Docker, just go to the website and install it for the machine that you are using. After you have it installed, you will need to build your container and run it. To build the container, ensure that you are in the base of the RIDR directory, and run the following command: `docker build <username>/ridr .` (Be sure to put the period after ridr to specify the root directory). This will build a container locally on your system based off the Dockerfile located at the base of the project. Once you have built the container, ensure it exists with the command `docker ps`. When you have verified that the container does exist, run the command: `docker container run -d -p 3000:3000 --name ridr <username>/ridr`. This command simultaneously starts the server and exposed port 3000 to your machine, which is where the port that we are using for development. You will need to stop the container and rebuild each time that you make a change as it currently stands. To do this, run the command: `docker stop ridr`, and use the previous commands to build and run again. 
 
 ## Resources 
 [Markdown Cheat Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 [Unit Testing](https://jestjs.io/en/)
+
+[Docker](https://www.youtube.com/watch?v=Kyx2PsuwomE)
 
 [Continuous Integration (CI)](https://docs.travis-ci.com/user/getting-started)
 
