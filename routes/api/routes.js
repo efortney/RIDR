@@ -27,6 +27,17 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
+    const location = await new Location({
+      name: val.name,
+      image: val.image_url,
+      coordinates: {
+        latitude: val.coordinates.latitude,
+        longitude: val.coordinates.latitude
+      },
+      rating: val.rating,
+      is_closed: val.is_closed,
+      display_phone: val.display_phone
+    });
     res.render('result', {
       val: val
     });
@@ -65,6 +76,7 @@ module.exports = app => {
    * @param {String} location : the location the search is being conducted in
    */
   async function makeRequest(term, lat, long) {
+    console.log('lat: ' + lat + ' long: ' + long)
     let result = client
       .search({
         term: term,
