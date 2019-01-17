@@ -1,4 +1,5 @@
 const passport = require('passport');
+const keys = require('../../config/keys');
 const axios = require('axios');
 const yelp = require('yelp-fusion');
 const apiKey = require('../../config/keys').yelp;
@@ -26,20 +27,29 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
-    const location = await new Location({
-      name: val.name,
-      image: val.image_url,
-      coordinates: {
-        latitude: val.coordinates.latitude,
-        longitude: val.coordinates.latitude
-      },
-      rating: val.rating,
-      is_closed: val.is_closed,
-      display_phone: val.display_phone
-    });
     res.render('result', {
-      location: location
+      val: val
     });
+  });
+
+  /**
+   * This route is responsible for performing a search against the Uber API to
+   * bring back all available rides.
+   */
+  app.get('/api/orderRide/uber', requireLogin, (req, res) => {
+    console.log('attempting to make request')
+    axios
+      .get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
+          headers: {
+            Authorization: 'Bearer ' + keys.uberClientID //the token is a variable which holds the token
+          }
+        }
+      )
+      .then(res => {
+        console.log('response: ' + res);
+        res.send(res);
+      });
   });
 
   // grabs the current user for the application
@@ -55,7 +65,6 @@ module.exports = app => {
    * @param {String} location : the location the search is being conducted in
    */
   async function makeRequest(term, lat, long) {
-    console.log('lat: ' + lat + ' long: ' + long)
     let result = client
       .search({
         term: term,
@@ -63,8 +72,7 @@ module.exports = app => {
       })
       .then(res => {
         let destination = res.jsonBody.businesses[0];
-        console.log(destination);
-        buildLocation(destination);
+        buildLocation(destination, lat, long);
         return destination;
       })
       .catch(error => {
@@ -78,7 +86,7 @@ module.exports = app => {
    * Builds a location from the resulting data, and stores it in the database for the user.
    * @param {JSON} location
    */
-  async function buildLocation(location) {
+  async function buildLocation(location, lat, long) {
     let result = async done => {
       const existingLocation = await Location.findOne({
         address: location.location.address1
@@ -90,6 +98,10 @@ module.exports = app => {
         const newLocation = await new Location({
           address: location.location.address1,
           name: location.name,
+          current_coordinates: {
+            longitude: long,
+            latitude: lat
+          },
           coordinates: {
             longitude: location.coordinates.longitude,
             latitude: location.coordinates.latitude
