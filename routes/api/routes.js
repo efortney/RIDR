@@ -7,11 +7,10 @@ const client = yelp.client(apiKey);
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
 const User = mongoose.model('users');
-const requireLogin = require('./requireLogin').requireLogin;
 
 module.exports = app => {
   // logout route
-  app.get('/api/logout', requireLogin, (req, res) => {
+  app.get('/api/logout', (req, res) => {
     req.logout();
     res.redirect('/');
   });
@@ -20,7 +19,7 @@ module.exports = app => {
    * Performs a search using the user destination, the desired location, and returns the
    * first available result
    */
-  app.post('/api/search', requireLogin, async (req, res) => {
+  app.post('/api/search', async (req, res) => {
     let jsonPayload = req.body;
     let val = await makeRequest(
       jsonPayload.destination,
@@ -38,8 +37,10 @@ module.exports = app => {
       is_closed: val.is_closed,
       display_phone: val.display_phone
     });
+    let data = await getUberPriceEstimates(jsonPayload.lat, jsonPayload.lng, location.coordinates.latitude, location.coordinates.longitude);
     res.render('result', {
-      val: val
+      val: val,
+      data : data 
     });
   });
 
@@ -64,11 +65,42 @@ module.exports = app => {
   });
 
   // grabs the current user for the application
-  app.get('/api/current_user', requireLogin, (req, res) => {
+  app.get('/api/current_user', (req, res) => {
     console.log('getting user');
     res.send(req.user);
     console.log(req.user);
   });
+
+  /**
+   * getUberResults is responsible for making a call to Ubers api to retrieve
+   * ride estimates for prices. It uses our unique server token in order to
+   * validate with the api.
+   * @param {String} userCurrentLat : the lat the user is at 
+   * @param {String} userCurrentLng : the current lng the user is at
+   * @param {requestedLat} : the requested lat from the searched location 
+   * @param {requestedLng} : the requested lng from the searched location 
+   */
+  async function getUberPriceEstimates(userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
+    console.log('Coordinates: ' + userCurrentLat + ' ' + userCurrentLng + ' ' + requestedLat + ' ' + requestedLng )
+    const data = axios
+      .get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
+        {
+          headers: {
+            Authorization: 'Token ' + '71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5'
+          }
+        }
+      )
+      .then(res => {
+        console.log('response: ' + JSON.stringify(res.data) );
+        return res.data;
+      })
+      .catch(err => {
+        console.log('ERROR AT getUberResults: ' + err);
+      });
+
+    return data;
+  }
 
   /**
    * Makes a request to the API conducting a general business search.
@@ -76,7 +108,7 @@ module.exports = app => {
    * @param {String} location : the location the search is being conducted in
    */
   async function makeRequest(term, lat, long) {
-    console.log('lat: ' + lat + ' long: ' + long)
+    console.log('lat: ' + lat + ' long: ' + long);
     let result = client
       .search({
         term: term,

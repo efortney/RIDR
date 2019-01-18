@@ -11,17 +11,15 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <img class="card-img-top" style="max-width:350px; max-height:350px;" src= <%= val.image_url %> alt="destination" />
+                    <img class="card-img-top" src= <%= val.image_url %> alt="destination" />
                     <div class="card-body">
                         <h5 class="card-title">
                             <%= val.name %>
                         </h5>
                         <p>
                             <%= val.display_phone %>
+                            <%= data %>
                         </p>
-                        <btn onclick="findRides()" class="btn btn-primary">
-                            Order Ride
-                        </btn>
                     </div>
                 </div>
             </div>
