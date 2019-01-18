@@ -48,11 +48,20 @@ module.exports = app => {
    * This route is responsible for performing a search against the Uber API to
    * bring back all available rides.
    */
-  app.get('/api/orderRide/uber', async (req, res) => {
-    console.log('attempting to make request');
-    let data = await getUberPriceEstimates();
-    console.log(data);
-    res.json(data);
+  app.get('/api/orderRide/uber', requireLogin, (req, res) => {
+    console.log('attempting to make request')
+    axios
+      .get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
+          headers: {
+            Authorization: 'Bearer ' + keys.uberClientID //the token is a variable which holds the token
+          }
+        }
+      )
+      .then(res => {
+        console.log('response: ' + res);
+        res.send(res);
+      });
   });
 
   // grabs the current user for the application

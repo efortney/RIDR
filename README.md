@@ -1,15 +1,15 @@
 # RIDR
 
 ## What is RIDR?
-RIDR is a PWA (Progressive Web App) that allows for a user to take full advantage of compaines such as Uber, Lyft, and local taxi companies all from one app.
+RIDR is a PWA (Progressive Web App) that allows for a user to take full advantage of compaines such as Uber, Lyft, and local taxi companies all from one app. It is primarily a proof of concept as it is currently a violation of Uber's terms of service to user their API to compare prices with third parties. 
 
 ## Getting Started 
-In order to run development for this project, you will need to have Node.js and React installed. Check the resources section below to find hyper-links to the respective web sites. 
+In order to run development for this project, you will need to have NPM / Node and React installed. Check the resources section below to find hyper-links to the respective web sites. 
 
 ### Starting the Server 
 First we will need to install all dependencies. CD into the server directory, and run the command `npm -i`. This will look into your package.json file and automatically install all the packages that you will need. 
 
-After running the above step, you can fire up the development server. YOU MUST HAVE NODE AND REACT INSTALLED!! At the server directory, run the command `npm run dev`. This will concurrently run both the front end and back end servers. Navigate to localhost:3000 in your browser if you are not automatically kicked there.  
+After running the above step, you can fire up the development server. At the server directory, run the command `npm run dev`. This will concurrently run both the front end and back end servers. Navigate to localhost:3000 in your browser if you are not automatically kicked there.  
 
 ### Docker 
 Docker is a container platform that allows us to have a production or development enviroment easily deployed on any machine without having to fight against configuration issues. It is similar to a virutal machine, but it has several distinct advantages, mainly that containers can be built on top of eachother. This allows for the development of several containers that are responsible for performing specific tasks. When thinking in terms of scalability, this is one of the greatest solutions that is currently available. 
