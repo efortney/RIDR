@@ -37,7 +37,7 @@ module.exports = app => {
       is_closed: val.is_closed,
       display_phone: val.display_phone
     });
-    let data = await getUberPriceEstimates(jsonPayload.lat, jsonPayload.lng, location.coordinates.latitude, location.coordinates.longitude);
+    let data = await getUberPriceEstimates(jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
     res.render('result', {
       val: val,
       data : data 
@@ -51,8 +51,8 @@ module.exports = app => {
   app.get('/api/orderRide/uber', async (req, res) => {
     console.log('attempting to make request');
     let data = await getUberPriceEstimates();
-    console.log(data);
-    res.json(data);
+    console.log('data' + data);
+    res.send(data);
   });
 
   // grabs the current user for the application
@@ -72,10 +72,11 @@ module.exports = app => {
    * @param {requestedLng} : the requested lng from the searched location 
    */
   async function getUberPriceEstimates(userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
-    console.log('Coordinates: ' + userCurrentLat + ' ' + userCurrentLng + ' ' + requestedLat + ' ' + requestedLng )
+    let results = [];
     const data = axios
       .get(
-        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&` +
+         `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
         {
           headers: {
             Authorization: 'Token ' + '71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5'
@@ -83,14 +84,12 @@ module.exports = app => {
         }
       )
       .then(res => {
-        console.log('response: ' + JSON.stringify(res.data) );
+        console.log('response: ' + res.data);
         return res.data;
       })
       .catch(err => {
         console.log('ERROR AT getUberResults: ' + err);
       });
-
-    return data;
   }
 
   /**
