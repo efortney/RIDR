@@ -48,7 +48,7 @@ module.exports = app => {
    * This route is responsible for performing a search against the Uber API to
    * bring back all available rides.
    */
-  app.get('/api/orderRide/uber', requireLogin, (req, res) => {
+  app.get('/api/orderRide/uber', (req, res) => {
     console.log('attempting to make request')
     axios
       .get(
