@@ -26,33 +26,7 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
-    const location = await new Location({
-      name: val.name,
-      image: val.image_url,
-      coordinates: {
-        latitude: val.coordinates.latitude,
-        longitude: val.coordinates.latitude
-      },
-      rating: val.rating,
-      is_closed: val.is_closed,
-      display_phone: val.display_phone
-    });
-    let data = await getUberPriceEstimates(jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
-    res.render('result', {
-      val: val,
-      data : data 
-    });
-  });
-
-  /**
-   * This route is responsible for performing a search against the Uber API to
-   * bring back all available rides.
-   */
-  app.get('/api/orderRide/uber', async (req, res) => {
-    console.log('attempting to make request');
-    let data = await getUberPriceEstimates();
-    console.log('data' + data);
-    res.send(data);
+    await getUberPriceEstimates(val, res,jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
   });
 
   // grabs the current user for the application
@@ -68,13 +42,12 @@ module.exports = app => {
    * validate with the api.
    * @param {String} userCurrentLat : the lat the user is at 
    * @param {String} userCurrentLng : the current lng the user is at
-   * @param {requestedLat} : the requested lat from the searched location 
-   * @param {requestedLng} : the requested lng from the searched location 
+   * @param {String} requestedLat : the requested lat from the searched location
+   * @param {String} requestedLng : the requested lng from the searched location
    */
-  async function getUberPriceEstimates(userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
-    let results = [];
-    const data = axios
-      .get(
+  async function getUberPriceEstimates(val, response, userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
+    let returnValue;
+    axios.get(
         `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&` +
          `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
         {
@@ -84,12 +57,16 @@ module.exports = app => {
         }
       )
       .then(res => {
-        console.log('response: ' + res.data);
-        return res.data;
+        returnValue = JSON.stringify(res.data);
+        response.render('result', {
+          val : val,
+          data : returnValue
+        });
       })
       .catch(err => {
         console.log('ERROR AT getUberResults: ' + err);
       });
+
   }
 
   /**
