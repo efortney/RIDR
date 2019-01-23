@@ -26,22 +26,8 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
-    const location = await new Location({
-      name: val.name,
-      image: val.image_url,
-      coordinates: {
-        latitude: val.coordinates.latitude,
-        longitude: val.coordinates.latitude
-      },
-      rating: val.rating,
-      is_closed: val.is_closed,
-      display_phone: val.display_phone
-    });
-    let data = await getUberPriceEstimates(jsonPayload.lat, jsonPayload.lng, location.coordinates.latitude, location.coordinates.longitude);
-    res.render('result', {
-      val: val,
-      data : data 
-    });
+    
+    await getUberPriceEstimates(val, res,jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
   });
 
   /**
@@ -75,16 +61,19 @@ module.exports = app => {
    * getUberResults is responsible for making a call to Ubers api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
    * validate with the api.
+
+   * @param {Object} val : the values returned from a desired location, see api/search for more info
+   * @param {Object} response : response object
    * @param {String} userCurrentLat : the lat the user is at 
    * @param {String} userCurrentLng : the current lng the user is at
-   * @param {requestedLat} : the requested lat from the searched location 
-   * @param {requestedLng} : the requested lng from the searched location 
+   * @param {String} requestedLat : the requested lat from the searched location
+   * @param {String} requestedLng : the requested lng from the searched location
    */
-  async function getUberPriceEstimates(userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
-    console.log('Coordinates: ' + userCurrentLat + ' ' + userCurrentLng + ' ' + requestedLat + ' ' + requestedLng )
-    const data = axios
-      .get(
-        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
+  async function getUberPriceEstimates(val, response, userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
+    let returnValue;
+    axios.get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&` +
+         `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
         {
           headers: {
             Authorization: 'Token ' + '71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5'
@@ -92,14 +81,15 @@ module.exports = app => {
         }
       )
       .then(res => {
-        console.log('response: ' + JSON.stringify(res.data) );
-        return res.data;
+        returnValue = res.data;
+        response.render('result', {
+          val : val,
+          data : returnValue.prices
+        });
       })
       .catch(err => {
-        console.log('ERROR AT getUberResults: ' + err);
+        console.log('ERROR ' + err);
       });
-
-    return data;
   }
 
   /**
