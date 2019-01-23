@@ -26,7 +26,28 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
+    
     await getUberPriceEstimates(val, res,jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
+  });
+
+  /**
+   * This route is responsible for performing a search against the Uber API to
+   * bring back all available rides.
+   */
+  app.get('/api/orderRide/uber', (req, res) => {
+    console.log('attempting to make request')
+    axios
+      .get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
+          headers: {
+            Authorization: 'Bearer ' + keys.uberClientID //the token is a variable which holds the token
+          }
+        }
+      )
+      .then(res => {
+        console.log('response: ' + res);
+        res.send(res);
+      });
   });
 
   // grabs the current user for the application
@@ -40,6 +61,7 @@ module.exports = app => {
    * getUberResults is responsible for making a call to Ubers api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
    * validate with the api.
+
    * @param {Object} val : the values returned from a desired location, see api/search for more info
    * @param {Object} response : response object
    * @param {String} userCurrentLat : the lat the user is at 
@@ -68,7 +90,6 @@ module.exports = app => {
       .catch(err => {
         console.log('ERROR ' + err);
       });
-
   }
 
   /**
