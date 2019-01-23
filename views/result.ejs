@@ -1,42 +1,40 @@
 <html>
 
 <head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
 
 </head>
 
-<body>
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <img class="card-img-top" src= <%= val.image_url %> alt="destination" />
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= val.name %>
-                        </h5>
-                        <p>
-                            <%= val.display_phone %>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <h2> RESULT</h2>
-                <h3> <%= data %> </h3>
+<body style="background-color: #f4f4f4">
+<div class="container text-center" style="padding:2rem">
+    <div class="row">
+        <div class="card" style="width: 100%">
+            <a href="/" class="btn btn-secondary">Back</a>
+            <div class="card-body">
+                <h5 class="card-title"> <%= val.name %></h5>
+                <img style="height: 18rem" src=" <%= val.image_url %>"/>
+                <p> <%= val.location.display_address[0] %></p>
+                <hr/>
+                <p class="card-text">
+                    <% for (let i in data) { %>
+                <p> <%= data[i].localized_display_name %> : <%= data[i].estimate %> </p>
+                </tr>
+                <% } %>
+                </p>
+                <a target="_blank" href="<%= val.url %>">View on Yelp!</a>
             </div>
         </div>
     </div>
+
+</div>
 </body>
 
-<footer>
 
-</footer>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
-    crossorigin="anonymous">
-    </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+        crossorigin="anonymous">
+</script>
 
 </html>

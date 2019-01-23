@@ -40,6 +40,8 @@ module.exports = app => {
    * getUberResults is responsible for making a call to Ubers api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
    * validate with the api.
+   * @param {Object} val : the values returned from a desired location, see api/search for more info
+   * @param {Object} response : response object
    * @param {String} userCurrentLat : the lat the user is at 
    * @param {String} userCurrentLng : the current lng the user is at
    * @param {String} requestedLat : the requested lat from the searched location
@@ -57,14 +59,14 @@ module.exports = app => {
         }
       )
       .then(res => {
-        returnValue = JSON.stringify(res.data);
+        returnValue = res.data;
         response.render('result', {
           val : val,
-          data : returnValue
+          data : returnValue.prices
         });
       })
       .catch(err => {
-        console.log('ERROR AT getUberResults: ' + err);
+        console.log('ERROR ' + err);
       });
 
   }
