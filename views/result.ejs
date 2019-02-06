@@ -11,23 +11,23 @@
 <div class="container text-center" style="padding:2rem">
     <div class="row">
         <div class="card" style="width: 100%">
-            <a href="/" class="btn btn-secondary">Back</a>
+            <a href="/" class="btn btn-primary">Back</a>
             <div class="card-body">
                 <h5 class="card-title"> <%= val.name %></h5>
                 <img style="height: 18rem" src=" <%= val.image_url %>"/>
                 <p> <%= val.location.display_address[0] %></p>
                 <hr/>
                 <p class="card-text">
-                    <% for (let i in data) { %>
-                <p> <%= data[i].localized_display_name %> : <%= data[i].estimate %> </p>
-                </tr>
+                    <% for (let i in lyftData) { %>
+                <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min %> - <%= lyftData[i].estimated_cost_cents_max %></p>
                 <% } %>
-                </p>
+                <% for (let i in uberData) { %>
+                    <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
+                <% } %>
                 <a target="_blank" href="<%= val.url %>">View on Yelp!</a>
             </div>
         </div>
     </div>
-
 </div>
 </body>
 

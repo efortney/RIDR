@@ -80,14 +80,6 @@ export class MapContainer extends Component {
     );
   }
 
-  // updates maps location when a new destination is searched for 
-  handleChange(location) {
-    this.setState({
-      userLocation: {lat : location.latitude , lng : location.longitude}
-    });
-    console.log(this.state.userLocation)
-  }
-
 } // end of component 
 
 
