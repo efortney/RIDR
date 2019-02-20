@@ -10,7 +10,7 @@
 <body style="background-color: #f4f4f4">
 <div class="container text-center" style="padding:2rem">
     <div class="row">
-        <div class="card" style="width: 100%">
+        <div class="card">
             <a href="/" class="btn btn-primary">Back</a>
             <div class="card-body">
                 <h5 class="card-title"> <%= val.name %></h5>
@@ -24,7 +24,10 @@
                 <% for (let i in uberData) { %>
                     <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
                 <% } %>
-                <a target="_blank" href="<%= val.url %>">View on Yelp!</a>
+            
+                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-primary"> Order Uber</button></a> 
+                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-danger"> Order Lyft</button></a> 
+                <a target="_blank" href="<%= val.url %>"><btn class="btn btn-secondary">View on Yelp!</btn></a>
             </div>
         </div>
     </div>
