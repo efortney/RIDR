@@ -37,7 +37,7 @@ module.exports = app => {
       .get(
         `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
           headers: {
-            Authorization: 'Bearer ' + keys.uberClientID //the token is a variable which holds the token
+            Authorization: 'Bearer ' + keys.uberClientID 
           }
         }
       )
@@ -59,8 +59,9 @@ module.exports = app => {
   async function getLyftResults(val, response, uberData, userCurrentLat, userCurrentLong, requestedLat, requestedLong) {
     let values;
     let defaultClient = lyft.ApiClient.instance;
-    defaultClient.authentications['Client Authentication'].accessToken = 'F7FygvswG7KFA/CMm5XdCCRLz+U/0tICFomuGNn7bFBbLuAXISbmNmlY1yTOY9/XoTeZQZB1Suy5SrZI2ccqzPdtjcr6E4WtP0nJpKRfyrrR6iLXp3mWQtQ=';
-    const lyftPublicApi = new lyft.PublicApi();
+    let clientAuth = defaultClient.authentications['Client Authentication'];
+    clientAuth.accessToken = 'F7FygvswG7KFA/CMm5XdCCRLz+U/0tICFomuGNn7bFBbLuAXISbmNmlY1yTOY9/XoTeZQZB1Suy5SrZI2ccqzPdtjcr6E4WtP0nJpKRfyrrR6iLXp3mWQtQ=';
+    let lyftPublicApi = new lyft.PublicApi();
 
     // options store the destination lat and long
     let opts = {
@@ -73,19 +74,11 @@ module.exports = app => {
     }, (error) => {
       console.error(error);
     }).then(  data => {
-      if(values.estimated_cost_cents_min === undefined) {
-        response.render('result', {
-          val: val,
-          uberData: uberData.prices,
-          lyftData: undefined
-        });
-      } else {
         response.render('result', {
           val: val,
           uberData: uberData.prices,
           lyftData: values
         });
-      }
     });
 
   }
@@ -131,7 +124,6 @@ module.exports = app => {
    * @param long {String} : long
    */
   async function makeRequest(term, lat, long) {
-    console.log('lat: ' + lat + ' long: ' + long);
     return client
         .search({
           term: term,
