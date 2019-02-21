@@ -1,7 +1,7 @@
 # RIDR
 
 ## What is RIDR?
-RIDR is a PWA (Progressive Web App) that allows for a user to take full advantage of compaines such as Uber, Lyft, and local taxi companies all from one app. It is primarily a proof of concept as it is currently a violation of Uber's terms of service to user their API to compare prices with third parties. 
+RIDR is a PWA (Progressive Web App) that allows for a user to take full advantage of compaines such as Uber, Lyft, and local taxi companies all from one app. It is primarily a proof of concept as it is currently a violation of Uber's and Lyfts terms of service to use their API to compare prices with other competitors. 
 
 ## Getting Started 
 In order to run development for this project, you will need to have NPM / Node and React installed. Check the resources section below to find hyper-links to the respective web sites. 
