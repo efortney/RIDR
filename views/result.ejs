@@ -8,28 +8,29 @@
 </head>
 
 <body style="background-color: #f4f4f4">
-<div class="container text-center" style="padding:2rem">
+<div class="container " style="padding:2rem">
     <div class="row">
-        <div class="card">
-            <a href="/" class="btn btn-primary">Back</a>
-            <div class="card-body">
-                <h5 class="card-title"> <%= val.name %></h5>
-                <img style="height: 18rem" src=" <%= val.image_url %>"/>
-                <p> <%= val.location.display_address[0] %></p>
-                <hr/>
-                <p class="card-text">
-                    <% for (let i in lyftData) { %>
-                <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min %> - <%= lyftData[i].estimated_cost_cents_max %></p>
-                <% } %>
-                <% for (let i in uberData) { %>
-                    <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
-                <% } %>
-            
-                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-primary"> Order Uber</button></a> 
-                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-danger"> Order Lyft</button></a> 
-                <a target="_blank" href="<%= val.url %>"><btn class="btn btn-secondary">View on Yelp!</btn></a>
-            </div>
+        <div class="col-md-12">
+            <h4> <%= val.name %> </h4> 
+            <img style="max-width: 50%;" src="<%= val.image_url %>" /> 
         </div>
+        <% for(let i = 0; i < uberData.length; i++) { %>
+            <div class="card col-md-2" style="margin: 2.8px; padding: 5px;">
+                <h3> <%= uberData[i].display_name %> </h3>
+                <hr/>
+                <p> $<%= uberData[i].low_estimate %></p>
+                <button class="btn btn-primary">Go!</button>
+            </div> 
+            <% } %>
+            <% for(let i = 0; i < lyftData.length; i++) { %>
+                <div class="card col-md-2" style="margin: 2.8px; padding: 5px;">
+                    <h3> <%= lyftData[i].display_name %> </h3>
+                    <hr/>
+                    <p> $<%= lyftData[i].estimated_cost_cents_min %></p>
+                    <button class="btn btn-primary">Go!</button>
+                </div> 
+                <% } %>
+        
     </div>
 </div>
 </body>

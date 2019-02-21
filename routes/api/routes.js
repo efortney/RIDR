@@ -42,7 +42,6 @@ module.exports = app => {
         }
       )
       .then(res => {
-        console.log('response: ' + res);
         res.send(res);
       });
   });
@@ -84,7 +83,6 @@ module.exports = app => {
   }
 
 
-  /**
   /**
    * getUberResults is responsible for making a call to Uber's api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
