@@ -1,89 +1,61 @@
-/**
- * Map currently exists as the home page of the application, where we are rendering
- * most of the UI.
- */
+import React, { Component } from 'react'
+import './Map.css'
 
-import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
-import { InfoWindow, Marker } from 'google-maps-react';
-import { ClipLoader } from 'react-spinners';
-import SearchBar from './searchbar';
+class Map extends Component {
 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
-
-const loadingStyles = {
-  position: 'fixed',
-  top: '50%',
-  left: '40%'
-};
-
-/**
- * Displays while the googe maps API is loading
- */
-const LoadingContainer = () => {
-  return (
-    <div className="text-center" style={loadingStyles}>
-      <ClipLoader sizeUnit={'px'} size={125} color={'#123abc'} />
-    </div>
-  );
-};
-
-export class MapContainer extends Component {
-  constructor(){
-    super();
-  }
-  state = {
-    userLocation: { lat: 92, lng: 92 },
-    loading: true,
-    destination: { lat: 12, lng: 92 }
-  };
-
-  componentDidMount(props) {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        const { latitude, longitude } = position.coords;
-
-        this.setState({
-          userLocation: { lat: latitude, lng: longitude },
-          loading: false
-        });
-      },
-      () => {
-        this.setState({ loading: false });
-      }
-    );
-  }
-
-  render() {
-    const { loading, userLocation } = this.state;
-    const { google } = this.props;
-
-    if (loading) {
-      return null;
+    componentDidMount() {
+        this.renderMap()
     }
 
-    return (
-      <div>
-        <SearchBar location={this.state.userLocation} />
-        <Map
-          google={google}
-          mapTypeControl={false}
-          initialCenter={userLocation}
-          zoom={14}
-        >
-          <Marker position={userLocation} />
-        </Map>
-      </div>
-    );
-  }
-
-} // end of component 
+    renderMap = () => {
+        loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4&callback=initMap")
+        window.initMap = this.initMap
+    }
 
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4',
-  LoadingContainer: LoadingContainer
-})(MapContainer);
+
+    initMap = () => {
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+        var kc = new google.maps.LatLng(39.301361, -94277525)
+        var mapOptions = {
+            zoom: 7,
+            center: chicago
+        }
+        var map = new window.google.maps.Map(document.getElementById('map'), mpaOptions)
+        var request = {
+            origin: chicago,
+            destination: kc,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                directionsDisplay.setDirections(result);
+            }
+        });
+    }
+
+
+
+
+
+    render() {
+        return (
+            <main>
+                <div id="map"></div>
+            </main>
+        )
+    }
+}
+
+function loadScript(url) {
+    var index  = window.document.getElementsByTagName("script")[0]
+    var script = window.document.createElement("script")
+    script.src = url
+    script.async = true
+    script.defer = true
+    index.parentNode.insertBefore(script, index)
+}
+
+export default Map;
