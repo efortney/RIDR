@@ -1,84 +1,151 @@
 const passport = require('passport');
+const keys = require('../../config/keys');
 const axios = require('axios');
-const yelp = require('yelp-fusion');
 const apiKey = require('../../config/keys').yelp;
-const client = yelp.client(apiKey);
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
-const User = mongoose.model('users');
-const requireLogin = require('./requireLogin').requireLogin;
+
+const lyft = require('node-lyft');
+const yelp = require('yelp-fusion');
+const defaultClient = lyft.ApiClient.instance;
+const client = yelp.client(apiKey);
 
 module.exports = app => {
-  // logout route
-  app.get('/api/logout', requireLogin, (req, res) => {
-    req.logout();
-    res.redirect('/');
-  });
 
   /**
    * Performs a search using the user destination, the desired location, and returns the
    * first available result
    */
   app.post('/api/search', async (req, res) => {
-    console.log(req.location);
     let jsonPayload = req.body;
     let val = await makeRequest(
       jsonPayload.destination,
       jsonPayload.lat,
-      jsonPayload.long
+      jsonPayload.lng
     );
-    const location = await new Location({
-      name: val.name,
-      image: val.image_url,
-      coordinates: {
-        latitude: val.coordinates.latitude,
-        longitude: val.coordinates.latitude
-      },
-      rating: val.rating,
-      is_closed: val.is_closed,
-      display_phone: val.display_phone
-    });
-    console.log(location);
-    res.render('result', {
-      location: location
-    });
+    
+    await getUberPriceEstimates(val, res,jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
   });
 
-  // grabs the current user for the application
-  app.get('/api/current_user', requireLogin, (req, res) => {
-    console.log('getting user');
-    res.send(req.user);
-    console.log(req.user);
+  /**
+   * This route is responsible for performing a search against the Uber API to
+   * bring back all available rides.
+   */
+  app.get('/api/orderRide/uber', (req, res) => {
+    console.log('attempting to make request');
+    axios
+      .get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
+          headers: {
+            Authorization: 'Bearer ' + keys.uberClientID 
+          }
+        }
+      )
+      .then(res => {
+        console.log('response: ' + res);
+        res.send(res);
+      });
   });
+
+
+  /**
+   *
+   * @param userCurrentLat
+   * @param userCurrentLong
+   * @param requestedLat
+   * @param requestedLong
+   * @return {Promise}
+   */
+  async function getLyftResults(val, response, uberData, userCurrentLat, userCurrentLong, requestedLat, requestedLong) {
+    let values;
+    let defaultClient = lyft.ApiClient.instance;
+    let clientAuth = defaultClient.authentications['Client Authentication'];
+    clientAuth.accessToken = 'F7FygvswG7KFA/CMm5XdCCRLz+U/0tICFomuGNn7bFBbLuAXISbmNmlY1yTOY9/XoTeZQZB1Suy5SrZI2ccqzPdtjcr6E4WtP0nJpKRfyrrR6iLXp3mWQtQ=';
+    let lyftPublicApi = new lyft.PublicApi();
+
+    // options store the destination lat and long
+    let opts = {
+      requestedLat,
+      requestedLong
+    };
+
+    lyftPublicApi.getCost(userCurrentLat, userCurrentLong, opts).then((data) => {
+        values =  data.cost_estimates;
+    }, (error) => {
+      console.error(error);
+    }).then(  data => {
+        response.render('result', {
+          val: val,
+          uberData: uberData.prices,
+          lyftData: values
+        });
+    });
+
+  }
+
+
+  /**
+  /**
+   * getUberResults is responsible for making a call to Uber's api to retrieve
+   * ride estimates for prices. It uses our unique server token in order to
+   * validate with the api.
+
+   * @param {Object} val : the values returned from a desired location, see api/search for more info
+   * @param {Object} response : response object
+   * @param {String} userCurrentLat : the lat the user is at 
+   * @param {String} userCurrentLng : the current lng the user is at
+   * @param {String} requestedLat : the requested lat from the searched location
+   * @param {String} requestedLng : the requested lng from the searched location
+   */
+  async function getUberPriceEstimates(val, response, userCurrentLat, userCurrentLng, requestedLat, requestedLng) {
+    let returnValue;
+    axios.get(
+        `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&` +
+         `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
+        {
+          headers: {
+            Authorization: 'Token ' + '71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5'
+          }
+        }
+      )
+      .then(async res => {
+        returnValue = res.data;
+        getLyftResults(val, response, returnValue,userCurrentLat, userCurrentLng, requestedLat, requestedLng);
+      })
+      .catch(err => {
+        console.log('ERROR ' + err);
+      });
+  }
 
   /**
    * Makes a request to the API conducting a general business search.
    * @param {String} term : the search keyword
-   * @param {String} location : the location the search is being conducted in
+   * @param lat {String} : lat
+   * @param long {String} : long
    */
   async function makeRequest(term, lat, long) {
-    let result = client
-      .search({
-        term: term,
-        location: `${lat},${long}`
-      })
-      .then(res => {
-        let destination = res.jsonBody.businesses[0];
-        buildLocation(destination);
-        return destination;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    return result;
+    return client
+        .search({
+          term: term,
+          location: `${lat},${long}`
+        })
+        .then(res => {
+          let destination = res.jsonBody.businesses[0];
+          buildLocation(destination, lat, long);
+          return destination;
+        })
+        .catch(error => {
+          console.log(error);
+        });
   }
 
   /**
    * Builds a location from the resulting data, and stores it in the database for the user.
    * @param {JSON} location
+   * @param {String} lat: latitude of location
+   * @param {String} long: longitude of location
    */
-  async function buildLocation(location) {
+  async function buildLocation(location, lat, long) {
     let result = async done => {
       const existingLocation = await Location.findOne({
         address: location.location.address1
@@ -87,9 +154,13 @@ module.exports = app => {
         return existingLocation;
       } else {
         // build a new location in the db and save it
-        const newLocation = await new Location({
+        return await new Location({
           address: location.location.address1,
           name: location.name,
+          current_coordinates: {
+            longitude: long,
+            latitude: lat
+          },
           coordinates: {
             longitude: location.coordinates.longitude,
             latitude: location.coordinates.latitude
@@ -97,7 +168,6 @@ module.exports = app => {
           rating: location.rating,
           is_closed: location.is_closed
         }).save();
-        return newLocation;
       }
     };
     result();

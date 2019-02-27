@@ -1,33 +1,42 @@
 <html>
 
 <head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-        crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
 
 </head>
 
-<body>
-    <div class="container">
+<body style="background-color: #f4f4f4">
+<div class="container text-center" style="padding:2rem">
+    <div class="row">
         <div class="card">
-            <img class="card-img-top" src=<%= location.image %> alt="destination" />
+            <a href="/" class="btn btn-primary">Back</a>
             <div class="card-body">
-                <h5 class="card-title"></h5>
+                <h5 class="card-title"> <%= val.name %></h5>
+                <img style="height: 18rem" src=" <%= val.image_url %>"/>
+                <p> <%= val.location.display_address[0] %></p>
+                <hr/>
                 <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                </p>
-                <a href="#" class="btn btn-primary">
-                    Order Ride
-                </a>
+                    <% for (let i in lyftData) { %>
+                <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min %> - <%= lyftData[i].estimated_cost_cents_max %></p>
+                <% } %>
+                <% for (let i in uberData) { %>
+                    <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
+                <% } %>
+            
+                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-primary"> Order Uber</button></a> 
+                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-danger"> Order Lyft</button></a> 
+                <a target="_blank" href="<%= val.url %>"><btn class="btn btn-secondary">View on Yelp!</btn></a>
             </div>
         </div>
     </div>
+</div>
 </body>
 
-<footer>
-
-</footer>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
-    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+        crossorigin="anonymous">
+</script>
 
 </html>
