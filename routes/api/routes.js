@@ -19,7 +19,7 @@ module.exports = app => {
    * Performs a search using the user destination, the desired location, and returns the
    * first available result
    */
-  app.post('/api/search', requireLogin, async (req, res) => {
+  app.post('/api/search', async (req, res) => {
     console.log(req.location);
     let jsonPayload = req.body;
     let val = await makeRequest(
