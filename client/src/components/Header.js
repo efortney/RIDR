@@ -5,7 +5,7 @@ const Header = () => {
     <div className="navbarClear">
       <nav className="navbar  navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="/">
-          <img height="40px" src={require('../images/RIDRLOC.png')} />
+          <img height="30px" src={require('../images/RIDRLOC.png')} />
           RIDR
         </a>
 
