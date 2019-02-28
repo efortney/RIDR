@@ -20,6 +20,10 @@
                 <% for (let i in uberData) { %>
                     <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
                 <% } %>
+                <% for (let i in lyftData) { %>
+                    <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min  / 100 %>-<%= lyftData[i].estimated_cost_cents_max  / 100 %></p>
+                <% } %>
+                
             
                 <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-primary"> Order Uber</button></a> 
                 <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-danger"> Order Lyft</button></a> 

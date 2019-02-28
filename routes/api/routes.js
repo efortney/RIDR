@@ -71,10 +71,10 @@ module.exports = app => {
     };
     lyft.getRideEstimates(query)
       .then((result) => {
-        console.log(result);
+        console.log(result.cost_estimates);
         response.render('result', {
           val: val,
-          lyftData : result,
+          lyftData : result.cost_estimates,
           uberData: uberData.prices,
         });
       })
