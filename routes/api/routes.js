@@ -1,14 +1,14 @@
-const passport = require('passport');
 const keys = require('../../config/keys');
 const axios = require('axios');
 const apiKey = require('../../config/keys').yelp;
+const config = require('../../config/keys');
 const mongoose = require('mongoose');
 const Location = mongoose.model('location');
 
-const lyft = require('node-lyft');
 const yelp = require('yelp-fusion');
-const defaultClient = lyft.ApiClient.instance;
 const client = yelp.client(apiKey);
+
+const Lyft = require('lyft-node');
 
 module.exports = app => {
 
@@ -23,8 +23,8 @@ module.exports = app => {
       jsonPayload.lat,
       jsonPayload.lng
     );
-    
-    await getUberPriceEstimates(val, res,jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
+
+    await getUberPriceEstimates(val, res, jsonPayload.lat, jsonPayload.lng, val.coordinates.latitude, val.coordinates.longitude);
   });
 
   /**
@@ -37,7 +37,7 @@ module.exports = app => {
       .get(
         `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
           headers: {
-            Authorization: 'Bearer ' + keys.uberClientID 
+            Authorization: 'Bearer ' + keys.uberClientID
           }
         }
       )
@@ -57,30 +57,30 @@ module.exports = app => {
    * @return {Promise}
    */
   async function getLyftResults(val, response, uberData, userCurrentLat, userCurrentLong, requestedLat, requestedLong) {
-    let values;
-    let defaultClient = lyft.ApiClient.instance;
-    let clientAuth = defaultClient.authentications['Client Authentication'];
-    clientAuth.accessToken = 'F7FygvswG7KFA/CMm5XdCCRLz+U/0tICFomuGNn7bFBbLuAXISbmNmlY1yTOY9/XoTeZQZB1Suy5SrZI2ccqzPdtjcr6E4WtP0nJpKRfyrrR6iLXp3mWQtQ=';
-    let lyftPublicApi = new lyft.PublicApi();
-
-    // options store the destination lat and long
-    let opts = {
-      requestedLat,
-      requestedLong
+    const lyft = new Lyft(config.lyftClientID, config.lyftSecret);
+    const query = {
+      start: {
+        latitude: userCurrentLat,
+        longitude: userCurrentLong,
+      },
+      end: {
+        latitude: requestedLat,
+        longitude: requestedLong,
+      },
+      rideType: 'lyft',
     };
-
-    lyftPublicApi.getCost(userCurrentLat, userCurrentLong, opts).then((data) => {
-        values =  data.cost_estimates;
-    }, (error) => {
-      console.error(error);
-    }).then(  data => {
+    lyft.getRideEstimates(query)
+      .then((result) => {
+        console.log(result);
         response.render('result', {
           val: val,
+          lyftData : result,
           uberData: uberData.prices,
-          lyftData: values
         });
-    });
-
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 
@@ -101,8 +101,7 @@ module.exports = app => {
     let returnValue;
     axios.get(
         `https://api.uber.com/v1.2/estimates/price?start_latitude=${userCurrentLat}&` +
-         `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`,
-        {
+        `start_longitude=${userCurrentLng}&end_latitude=${requestedLat}&end_longitude=${requestedLng}`, {
           headers: {
             Authorization: 'Token ' + '71zCZTX54_RFpzJndt22SrpjEydNT01kuc5KRbK5'
           }
@@ -110,7 +109,7 @@ module.exports = app => {
       )
       .then(async res => {
         returnValue = res.data;
-        getLyftResults(val, response, returnValue,userCurrentLat, userCurrentLng, requestedLat, requestedLng);
+        getLyftResults(val, response, returnValue, userCurrentLat, userCurrentLng, requestedLat, requestedLng);
       })
       .catch(err => {
         console.log('ERROR ' + err);
@@ -125,18 +124,18 @@ module.exports = app => {
    */
   async function makeRequest(term, lat, long) {
     return client
-        .search({
-          term: term,
-          location: `${lat},${long}`
-        })
-        .then(res => {
-          let destination = res.jsonBody.businesses[0];
-          buildLocation(destination, lat, long);
-          return destination;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      .search({
+        term: term,
+        location: `${lat},${long}`
+      })
+      .then(res => {
+        let destination = res.jsonBody.businesses[0];
+        buildLocation(destination, lat, long);
+        return destination;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   /**
