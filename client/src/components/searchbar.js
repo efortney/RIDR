@@ -51,7 +51,7 @@ class SearchBar extends Component {
   }
 
   handleChange(event) {
-    this.setState({ 
+    this.setState({
       query: event
     });
   }

@@ -17,10 +17,6 @@
                 <img style="height: 18rem" src=" <%= val.image_url %>"/>
                 <p> <%= val.location.display_address[0] %></p>
                 <hr/>
-                <p class="card-text">
-                    <% for (let i in lyftData) { %>
-                <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min %> - <%= lyftData[i].estimated_cost_cents_max %></p>
-                <% } %>
                 <% for (let i in uberData) { %>
                     <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
                 <% } %>
