@@ -39,6 +39,8 @@ app.use(
 );
 
 app.set('view engine', 'ejs');
+var publicDir = require('path').join(__dirname,'/public');
+app.use(express.static(publicDir));
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
