@@ -1,42 +1,137 @@
 <html>
 
 <head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-          crossorigin="anonymous">
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 
+<style>
+
+    .card-logo {
+        border-right: 2px black;
+    }
+    .data-card {
+        margin: 5px;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        padding: 7px;
+        border-radius: 5px;
+    }
+
+    .data-card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    #map {
+        width: 100%;
+        height: 200px;
+        background-color: grey;
+    }
+
+    .location-title {
+        font-size: 2rem;
+        font-family: 'Open Sans', sans-serif;
+        margin: 3rem;
+    }
+</style>
+
 <body style="background-color: #f4f4f4">
-<div class="container text-center" style="padding:2rem">
-    <div class="row">
-        <div class="card">
-            <a href="/" class="btn btn-primary">Back</a>
-            <div class="card-body">
-                <h5 class="card-title"> <%= val.name %></h5>
-                <img style="height: 18rem" src=" <%= val.image_url %>"/>
-                <p> <%= val.location.display_address[0] %></p>
-                <hr/>
-                <% for (let i in uberData) { %>
-                    <p> <%= uberData[i].localized_display_name %> : <%= uberData[i].estimate %> </p>
-                <% } %>
-                <% for (let i in lyftData) { %>
-                    <p> <%= lyftData[i].display_name %> : $<%= lyftData[i].estimated_cost_cents_min  / 100 %>-<%= lyftData[i].estimated_cost_cents_max  / 100 %></p>
-                <% } %>
-                
-            
-                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-primary"> Order Uber</button></a> 
-                <a target="_blank" href="https://m.uber.com/ul/"> <button class="btn btn-danger"> Order Lyft</button></a> 
-                <a target="_blank" href="<%= val.url %>"><btn class="btn btn-secondary">View on Yelp!</btn></a>
+
+    <div><a href="/"><button style="width:100%" class="btn btn-primary">Back</button></a> </div>
+
+    <!-- map div displays the map -->
+    <div id="map"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="location-title">
+                    <%= val.name %>
+                </h1>
             </div>
         </div>
+        <!-- loop through the ejs data and populate the page -->
+        <div class="row text-center">
+            <% for (let i=0; i < uberData.length; i++) { %>
+            <div class="data-card col-lg-3">
+                <h4>
+                    <%= uberData[i].display_name %>
+                </h4>
+                <hr />
+                <div class="row text-center">
+                    <div class="col-lg-6 card-logo">
+                        UBER LOGO
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            Price: $<%= uberData[i].low_estimate %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <!-- populate the lyft data -->
+            <% for (let i=0; i < lyftData.length; i++) { %>
+                <div class="data-card col-lg-3">
+                    <h4>
+                        <%= lyftData[i].display_name %>
+                    </h4>
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-lg-6 card-logo">
+                            UBER LOGO
+                        </div>
+                        <div class="col-lg-6">
+                            <p>
+                                Price: $<%= lyftData[i].estimated_cost_cents_min / 100 %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+
+        </div>
+
     </div>
-</div>
+    </div>
+    </div>
 </body>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
-        integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
-        crossorigin="anonymous">
+<!-- Code below here for the google map -->
+<script>
+    console.log(parseFloat('<%= val.coordinates.latitude %>'))
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        var uluru = {
+            lat: parseFloat('<%= val.coordinates.latitude %>'),
+            lng: parseFloat('<%= val.coordinates.longitude %>'),
+        };
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+                gestureHandling: 'none',
+                zoomControl: false,
+                disableDefaultUI: true,
+                zoom: 14,
+                center: uluru
+            });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4&callback=initMap">
+</script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+    crossorigin="anonymous">
 </script>
 
 </html>

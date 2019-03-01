@@ -1,0 +1,53 @@
+body,
+html {
+    height: 100%;
+    background-color: f4f2ef
+}
+
+.hero-text {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+  
+.bg {
+    /* The image used */
+    background-image: url("../images/city.jpg");
+    color: white;
+    /* Full height */
+    min-height: 500px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Target cell phones here */
+@media (max-width: 380px){
+
+    .hero-text {
+        text-align: center;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+      }
+    .bg {
+        /* The image used */
+        background-image: url("../images/city.jpg");
+        color: white;
+        /* Full height */
+        min-height: 300px;
+    
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+}

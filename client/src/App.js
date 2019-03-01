@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Marketing from './components/marketing';
-import Profile from './components/profile'
+import tech from './components/techStack';
 import Map from './components/Map';
-import SearchBar from './components/searchbar';
+
 require('./styles/main.css');
 
 /**
@@ -20,6 +20,7 @@ class App extends Component {
             <Route path="*" component={Header} />
             <Route exact path="/" component={Map} />
             <Route exact path="/marketing" component={Marketing} />
+            <Route exact path="/tech" component={tech} />
           </div>
         </BrowserRouter>
       </div>

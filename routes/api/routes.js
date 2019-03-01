@@ -58,6 +58,7 @@ module.exports = app => {
    */
   async function getLyftResults(val, response, uberData, userCurrentLat, userCurrentLong, requestedLat, requestedLong) {
     const lyft = new Lyft(config.lyftClientID, config.lyftSecret);
+    console.log(uberData);
     const query = {
       start: {
         latitude: userCurrentLat,
