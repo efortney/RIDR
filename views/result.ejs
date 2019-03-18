@@ -106,16 +106,23 @@
     console.log(parseFloat('<%= val.coordinates.latitude %>'))
     // Initialize and add the map
     function initMap() {
+
+
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+
         // The location of Uluru
         var uluru = {
             lat: parseFloat('<%= val.coordinates.latitude %>'),
             lng: parseFloat('<%= val.coordinates.longitude %>'),
         };
+
         // The map, centered at Uluru
         var map = new google.maps.Map(
             document.getElementById('map'), {
                 gestureHandling: 'none',
-                zoomControl: false,
+                zoomControl: true,
                 disableDefaultUI: true,
                 zoom: 14,
                 center: uluru
@@ -125,6 +132,29 @@
             position: uluru,
             map: map
         });
+        var lat1 = 0.0;
+        var long1 = 0.0;
+        navigator.geolocation.getCurrentPosition(position => {
+            lat1 = position.coords.latitude;
+            long1 = position.coords.longitude;
+            var userLoc = new google.maps.LatLng(lat1, long1);
+            directionsDisplay.setMap(map);
+
+
+            var request = {
+                origin: userLoc,
+                destination: uluru,
+                travelMode: 'DRIVING'
+            };
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    directionsDisplay.setDirections(result);
+                }
+            });
+
+        })
+
+
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UtxcZVztpcSZGOrCtAWfHSCN6PzJtL4&callback=initMap">
