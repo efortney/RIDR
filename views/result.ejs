@@ -7,7 +7,6 @@
 </head>
 
 <style>
-
     .card-logo {
         border-right: 2px black;
     }
@@ -44,7 +43,7 @@
     <!-- map div displays the map -->
     <div id="map"></div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1 class="location-title">
@@ -62,7 +61,7 @@
                 <hr />
                 <div class="row text-center">
                     <div class="col-lg-6 card-logo">
-                        UBER LOGO
+                        <img alt='uber' src='../public/images/uber.png' />
                     </div>
                     <div class="col-lg-6">
                         <p>
@@ -82,7 +81,7 @@
                     <hr />
                     <div class="row text-center">
                         <div class="col-lg-6 card-logo">
-                            UBER LOGO
+                            LYFT LOGO
                         </div>
                         <div class="col-lg-6">
                             <p>
@@ -93,6 +92,24 @@
                 </div>
                 <% } %>
 
+                <% for (let i=0; i < cabs.length; i++) { %>
+                    <div class="data-card col-lg-3">
+                        <h4>
+                            <%= cabs[i].name %>
+                        </h4>
+                        <hr />
+                        <div class="row text-center">
+                            <div class="col-lg-12">
+                                <p>
+                                    Phone: <%= cabs[i].display_phone %>
+                                </p>
+                                <p>
+                                <%= cabs[i].rating %> star
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
 
         </div>
 

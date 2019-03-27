@@ -19,7 +19,7 @@ require('./models/Location');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect((keys.mongo), (err, res) => {
+mongoose.connect((keys.mongo), (err) => {
   if(err){
     console.log('error at mongoose.connect: ' +err);
   }
@@ -39,8 +39,7 @@ app.use(
 );
 
 app.set('view engine', 'ejs');
-var publicDir = require('path').join(__dirname,'/public');
-app.use(express.static(publicDir));
+app.use( express.static( "public" ) );
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 

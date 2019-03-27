@@ -12,6 +12,25 @@ const Lyft = require('lyft-node');
 
 module.exports = app => {
 
+  async function getLocalCabs(lat, long) {
+    return client
+      .search({
+        term: 'taxi',
+        location: `${lat},${long}`
+      })
+      .then(res => {
+        let cabs = [];
+        for(let i = 0; i < 3; i ++) {
+          let company = res.jsonBody.businesses[i];
+          cabs.push(company);
+        }
+        return cabs;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   /**
    * Performs a search using the user destination, the desired location, and returns the
    * first available result
@@ -32,7 +51,6 @@ module.exports = app => {
    * bring back all available rides.
    */
   app.get('/api/orderRide/uber', (req, res) => {
-    console.log('attempting to make request');
     axios
       .get(
         `https://api.uber.com/v1.2/estimates/price?start_latitude=${1}&start_longitude=${1}&end_latitude=${1}&end_longitude=${1}`, {
@@ -58,7 +76,7 @@ module.exports = app => {
    */
   async function getLyftResults(val, response, uberData, userCurrentLat, userCurrentLong, requestedLat, requestedLong) {
     const lyft = new Lyft(config.lyftClientID, config.lyftSecret);
-    console.log(uberData);
+    let cabs = await getLocalCabs(userCurrentLat, userCurrentLong);
     const query = {
       start: {
         latitude: userCurrentLat,
@@ -72,8 +90,8 @@ module.exports = app => {
     };
     lyft.getRideEstimates(query)
       .then((result) => {
-        console.log(result.cost_estimates);
         response.render('result', {
+          cabs : cabs,
           val: val,
           lyftData : result.cost_estimates,
           uberData: uberData.prices,
@@ -85,7 +103,6 @@ module.exports = app => {
   }
 
 
-  /**
   /**
    * getUberResults is responsible for making a call to Uber's api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
@@ -118,7 +135,7 @@ module.exports = app => {
   }
 
   /**
-   * Makes a request to the API conducting a general business search.
+   * Makes a request to the Yelp API conducting a general business search.
    * @param {String} term : the search keyword
    * @param lat {String} : lat
    * @param long {String} : long
