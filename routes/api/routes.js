@@ -107,7 +107,6 @@ module.exports = app => {
    * getUberResults is responsible for making a call to Uber's api to retrieve
    * ride estimates for prices. It uses our unique server token in order to
    * validate with the api.
-
    * @param {Object} val : the values returned from a desired location, see api/search for more info
    * @param {Object} response : response object
    * @param {String} userCurrentLat : the lat the user is at 

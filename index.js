@@ -3,7 +3,6 @@
  *
  */
 const express = require('express');
-const https = require('https');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -39,9 +38,8 @@ app.use(
 );
 
 app.set('view engine', 'ejs');
-app.use( express.static( "public" ) );
-
 app.use(express.static(path.join(__dirname, 'client/build')));
+app.use( express.static( "public" ) );
 
 app.use(passport.initialize());
 app.use(passport.session());

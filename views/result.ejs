@@ -10,15 +10,6 @@
     .card-logo {
         border-right: 2px black;
     }
-    .data-card {
-        margin: 5px;
-        background-color: white;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-        padding: 7px;
-        border-radius: 5px;
-    }
-
     .data-card:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
@@ -54,16 +45,13 @@
         <!-- loop through the ejs data and populate the page -->
         <div class="row text-center">
             <% for (let i=0; i < uberData.length; i++) { %>
-            <div class="data-card col-lg-3">
+            <div class="data-card col-md-3">
                 <h4>
                     <%= uberData[i].display_name %>
                 </h4>
                 <hr />
                 <div class="row text-center">
-                    <div class="col-lg-6 card-logo">
-                        <img alt='uber' src='../public/images/uber.png' />
-                    </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <p>
                             Price: $<%= uberData[i].low_estimate %>
                         </p>
@@ -74,16 +62,13 @@
 
             <!-- populate the lyft data -->
             <% for (let i=0; i < lyftData.length; i++) { %>
-                <div class="data-card col-lg-3">
+                <div class="data-card col-md-3">
                     <h4>
                         <%= lyftData[i].display_name %>
                     </h4>
                     <hr />
                     <div class="row text-center">
-                        <div class="col-lg-6 card-logo">
-                            LYFT LOGO
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <p>
                                 Price: $<%= lyftData[i].estimated_cost_cents_min / 100 %>
                             </p>
@@ -93,7 +78,7 @@
                 <% } %>
 
                 <% for (let i=0; i < cabs.length; i++) { %>
-                    <div class="data-card col-lg-3">
+                    <div class="data-card col-md-3">
                         <h4>
                             <%= cabs[i].name %>
                         </h4>
@@ -123,9 +108,6 @@
     console.log(parseFloat('<%= val.coordinates.latitude %>'))
     // Initialize and add the map
     function initMap() {
-
-
-
         var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
 
