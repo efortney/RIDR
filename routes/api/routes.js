@@ -12,6 +12,53 @@ const Lyft = require('lyft-node');
 
 module.exports = app => {
 
+  /**
+   * Sorts the returned bars by the rating 
+   * @param {JSON array} barList 
+   */
+  function sortByRating(barList) {
+    let topBars = [];
+    let bars = barList.businesses;
+    for (let i = 0; i < 3; i++) {
+        if(bars[i].rating >= 4.5) {
+            topBars.push(bars[i]);
+        }
+    }
+    return topBars;
+  }
+
+  /**
+   * Route for retrieving the top bars in the area 
+   */
+  app.post('/api/localbars', async (req, res) => {
+    let location = req.body.location;
+    let bars = await getHotBars(location.lat, location.lng);
+    res.send(bars);
+  });
+
+  /**
+   * Gathers a list of the best rated bars in the area
+   * that the user is in, this function should also be moved 
+   * but again, who gives a shit since we cant even publish this
+   */
+  async function getHotBars(lat, lng) {
+    return client.search({
+        term: 'bars',
+        location: `${lat}, ${lng}`
+      })
+      .then(res => {
+        let results = res.jsonBody;
+        let sortedBars = sortByRating(results);
+        return sortedBars;
+      })
+  }
+
+  /**
+   * This should be moved to its own file but since we cant make this 
+   * a legal thing im not worried anymore lololol rip 
+   * @param {} lat 
+   * @param {*} long 
+   */
   async function getLocalCabs(lat, long) {
     return client
       .search({
@@ -20,7 +67,7 @@ module.exports = app => {
       })
       .then(res => {
         let cabs = [];
-        for(let i = 0; i < 3; i ++) {
+        for (let i = 0; i < 3; i++) {
           let company = res.jsonBody.businesses[i];
           cabs.push(company);
         }
@@ -91,9 +138,9 @@ module.exports = app => {
     lyft.getRideEstimates(query)
       .then((result) => {
         response.render('result', {
-          cabs : cabs,
+          cabs: cabs,
           val: val,
-          lyftData : result.cost_estimates,
+          lyftData: result.cost_estimates,
           uberData: uberData.prices,
         });
       })

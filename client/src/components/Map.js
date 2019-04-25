@@ -8,6 +8,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { InfoWindow, Marker } from 'google-maps-react';
 import { ClipLoader } from 'react-spinners';
 import SearchBar from './searchbar';
+import LocalHotSpots from './LocalHotSpots';
 
 const mapStyles = {
   width: '100%',
@@ -68,14 +69,22 @@ export class MapContainer extends Component {
     return (
       <div>
         <SearchBar location={this.state.userLocation} />
-        <Map
-          google={google}
-          mapTypeControl={false}
-          initialCenter={userLocation}
-          zoom={14}
-        >
+        <div className='row'>
+  
+        <div className='col-md-3'>
+        <LocalHotSpots location={this.state.userLocation}/>
+        </div>
+        <div className='col-md-9'>
+          <Map
+            google={google}
+            mapTypeControl={false}
+            initialCenter={userLocation}
+            zoom={14}
+          >
           <Marker position={userLocation} />
         </Map>
+        </div>
+        </div>
       </div>
     );
   }
